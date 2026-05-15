@@ -1,4 +1,4 @@
-package com.microservices.cart.cart.external;
+package com.microservices.cart.external;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

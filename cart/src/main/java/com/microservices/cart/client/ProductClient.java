@@ -1,6 +1,6 @@
-package com.microservices.cart.cart.client;
+package com.microservices.cart.client;
 
-import com.microservices.cart.cart.external.Product;
+import com.microservices.cart.external.Product;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

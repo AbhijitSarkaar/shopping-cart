@@ -1,6 +1,6 @@
-package com.microservices.cart.cart.exception;
+package com.microservices.cart.exception;
 
-import com.microservices.cart.cart.exception.response.CustomResponse;
+import com.microservices.cart.exception.response.CustomResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

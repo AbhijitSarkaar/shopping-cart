@@ -1,6 +1,5 @@
-package com.microservices.cart.cart.dto;
+package com.microservices.cart.dto;
 
-import com.microservices.cart.cart.model.Cart;
 import lombok.Data;
 
 import java.util.List;

@@ -1,10 +1,10 @@
-package com.microservices.cart.cart.util;
+package com.microservices.cart.util;
 
-import com.microservices.cart.cart.client.ProductClient;
-import com.microservices.cart.cart.dto.CartDTO;
-import com.microservices.cart.cart.dto.CartItemDTO;
-import com.microservices.cart.cart.external.Product;
-import com.microservices.cart.cart.model.Cart;
+import com.microservices.cart.client.ProductClient;
+import com.microservices.cart.dto.CartDTO;
+import com.microservices.cart.dto.CartItemDTO;
+import com.microservices.cart.external.Product;
+import com.microservices.cart.model.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

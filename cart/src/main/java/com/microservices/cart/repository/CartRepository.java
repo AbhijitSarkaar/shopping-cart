@@ -1,6 +1,6 @@
-package com.microservices.cart.cart.repository;
+package com.microservices.cart.repository;
 
-import com.microservices.cart.cart.model.Cart;
+import com.microservices.cart.model.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

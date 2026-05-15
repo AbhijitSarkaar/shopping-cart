@@ -1,4 +1,4 @@
-package com.microservices.cart.cart.exception.response;
+package com.microservices.cart.exception.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

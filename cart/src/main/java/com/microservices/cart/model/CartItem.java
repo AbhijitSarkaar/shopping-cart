@@ -1,4 +1,4 @@
-package com.microservices.cart.cart.model;
+package com.microservices.cart.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

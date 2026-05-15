@@ -1,15 +1,15 @@
-package com.microservices.cart.cart.service.impl;
+package com.microservices.cart.service.impl;
 
-import com.microservices.cart.cart.client.ProductClient;
-import com.microservices.cart.cart.dto.CartDTO;
-import com.microservices.cart.cart.dto.CartRequestDTO;
-import com.microservices.cart.cart.external.Product;
-import com.microservices.cart.cart.model.Cart;
-import com.microservices.cart.cart.model.CartItem;
-import com.microservices.cart.cart.repository.CartItemRepository;
-import com.microservices.cart.cart.repository.CartRepository;
-import com.microservices.cart.cart.service.CartService;
-import com.microservices.cart.cart.util.DTOBuilder;
+import com.microservices.cart.client.ProductClient;
+import com.microservices.cart.dto.CartDTO;
+import com.microservices.cart.dto.CartRequestDTO;
+import com.microservices.cart.external.Product;
+import com.microservices.cart.model.Cart;
+import com.microservices.cart.model.CartItem;
+import com.microservices.cart.repository.CartItemRepository;
+import com.microservices.cart.repository.CartRepository;
+import com.microservices.cart.service.CartService;
+import com.microservices.cart.util.DTOBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

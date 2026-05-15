@@ -1,8 +1,8 @@
-package com.microservices.cart.cart.controller;
+package com.microservices.cart.controller;
 
-import com.microservices.cart.cart.dto.CartDTO;
-import com.microservices.cart.cart.dto.CartRequestDTO;
-import com.microservices.cart.cart.service.CartService;
+import com.microservices.cart.dto.CartDTO;
+import com.microservices.cart.dto.CartRequestDTO;
+import com.microservices.cart.service.CartService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

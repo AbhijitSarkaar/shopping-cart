@@ -1,6 +1,6 @@
-package com.microservices.cart.cart.dto;
+package com.microservices.cart.dto;
 
-import com.microservices.cart.cart.external.Product;
+import com.microservices.cart.external.Product;
 import lombok.Data;
 
 @Data
