@@ -36,7 +36,13 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartDTO addToCart(CartRequestDTO cartRequestDto, HttpServletRequest httpServletRequest) {
-        Long userId = Long.valueOf(httpServletRequest.getHeader("X-USER-ID"));
+
+        String x_user_id = httpServletRequest.getHeader("X-USER-ID");
+        if(x_user_id == null) {
+            throw new RuntimeException("Unauthorized access");
+        }
+
+        Long userId = Long.valueOf(x_user_id);
 
         // fetch cart details if a cart exists
         Cart cart = cartRepository.findByUserId(userId);
@@ -68,6 +74,7 @@ public class CartServiceImpl implements CartService {
         cartItem.setQuantity(
                 cartItem.getQuantity() + 1
         );
+        cartItem.setAmount(product.getAmount());
         cartItem.setProductId(product.getProductId());
         cartItem.setCart(cart);
         cartItemRepository.save(cartItem);
@@ -96,7 +103,12 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartDTO fetchCartDetails(HttpServletRequest httpServletRequest) {
-        Long userId = Long.valueOf(httpServletRequest.getHeader("X-USER-ID"));
+        String x_user_id = httpServletRequest.getHeader("X-USER-ID");
+        if(x_user_id == null) {
+            throw new RuntimeException("Unauthorized access");
+        }
+
+        Long userId = Long.valueOf(x_user_id);
 
         // fetch cart details if a cart exists
         Cart cart = cartRepository.findByUserId(userId);
@@ -105,7 +117,67 @@ public class CartServiceImpl implements CartService {
         }
 
         return dtoBuilder.CartDtoBuilder(cart);
-
     }
 
+    @Override
+    public void handleProductUpdate(HttpServletRequest httpServletRequest, Long productId) {
+        String userId = httpServletRequest.getHeader("X-USER-ID");
+        if(userId == null) return;
+
+        // fetch cart details if a cart exists
+        Cart cart = cartRepository.findByUserId(Long.valueOf(userId));
+        if(cart == null) {
+            return;
+        }
+
+        Product product = productClient.getProductById(productId);
+
+        List<CartItem> cartItems = cart.getCartItems();
+        for(CartItem cartItem: cartItems) {
+            if(cartItem.getProductId().equals(productId)) {
+
+                cart.setTotalAmount(
+                        cart.getTotalAmount() - ( cartItem.getAmount() * cartItem.getQuantity() ) + ( product.getAmount() * cartItem.getQuantity() )
+                );
+
+                CartItem cartItem1 = new CartItem();
+                cartItem1.setAmount(product.getAmount());
+                cartItem1.setQuantity(cartItem.getQuantity());
+                cartItem1.setCartItemId(cartItem.getCartItemId());
+                cartItem1.setProductId(cartItem.getProductId());
+                cartItem1.setCart(cart);
+
+                cartItemRepository.save(cartItem1);
+            }
+        }
+        cartRepository.save(cart);
+    }
+
+    @Override
+    public void handleProductDelete(HttpServletRequest httpServletRequest, Long productId) {
+
+        String userId = httpServletRequest.getHeader("X-USER-ID");
+        if(userId == null) return;
+
+        // fetch cart details if a cart exists
+        Cart cart = cartRepository.findByUserId(Long.valueOf(userId));
+        if(cart == null) {
+            return;
+        }
+
+        // compute total cart amount
+        Double totalAmount = 0.0;
+        for(CartItem cartItem: cart.getCartItems()) {
+            totalAmount += cartItem.getAmount();
+        }
+        cart.setTotalAmount(totalAmount);
+
+        // delete empty cart
+        if(cart.getCartItems().isEmpty()) {
+            cartRepository.delete(cart);
+            return;
+        }
+
+        cartRepository.save(cart);
+    }
 }

@@ -22,6 +22,10 @@ public class CartItem {
     @Column(name = "quantity")
     private Integer quantity = 0;
 
+    @NotNull
+    @Column(name = "amount")
+    private Double amount;
+
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart;

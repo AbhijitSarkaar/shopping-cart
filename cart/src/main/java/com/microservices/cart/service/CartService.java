@@ -8,4 +8,12 @@ public interface CartService {
     CartDTO addToCart(CartRequestDTO cartRequestDto, HttpServletRequest httpServletRequest);
 
     CartDTO fetchCartDetails(HttpServletRequest httpServletRequest);
+
+    void handleProductUpdate(HttpServletRequest httpServletRequest, Long productId);
+
+    void handleProductDelete(HttpServletRequest httpServletRequest, Long productId);
 }
+
+
+
+

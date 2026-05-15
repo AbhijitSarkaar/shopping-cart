@@ -34,22 +34,30 @@ create table carts(
     constraint fk_user_cart
     foreign key (user_id)
     references users(user_id)
+    on delete cascade
     
 );
 
 drop table carts;
+
+delete from carts
+where cart_id = 1;
+
+truncate table carts;
 select * from carts;
 
 create table cart_items( 
 	
     cartitem_id bigint not null primary key auto_increment,
     quantity int not null, 
+    amount double not null,
     product_id int not null,
     cart_id bigint not null,
     
     constraint fk_product
     foreign key (product_id)
     references products(product_id),
+    on delete cascade
     
     constraint fk_cart
     foreign key (cart_id)
@@ -58,6 +66,8 @@ create table cart_items(
     
 );
 
+drop table cart_items;
+truncate table cart_items;
 select * from cart_items;
 
 

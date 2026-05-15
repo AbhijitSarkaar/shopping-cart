@@ -4,6 +4,7 @@ import com.microservices.product.dto.ProductDTO;
 import com.microservices.product.dto.ProductRequestDTO;
 import com.microservices.product.exception.response.CustomResponse;
 import com.microservices.product.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,20 +39,25 @@ public class ProductController {
     @PutMapping("/products/{productId}")
     public ResponseEntity<ProductDTO> update(
             @Valid @RequestBody ProductRequestDTO productRequestDto,
-            @PathVariable("productId") Long productId
+            @PathVariable("productId") Long productId,
+            HttpServletRequest httpServletRequest
             ) {
         return new ResponseEntity<>(
-                productService.update(productRequestDto, productId),
+                productService.update(productRequestDto, productId, httpServletRequest),
                 HttpStatus.OK
         );
     }
 
     @DeleteMapping("/products/{productId}")
     public ResponseEntity<CustomResponse> delete(
-            @PathVariable("productId") Long productId
+            @PathVariable("productId") Long productId,
+            HttpServletRequest httpServletRequest
     ) {
         return new ResponseEntity<>(
-                productService.delete(productId),
+                productService.delete(
+                        productId,
+                        httpServletRequest
+                ),
                 HttpStatus.OK
         );
     }
