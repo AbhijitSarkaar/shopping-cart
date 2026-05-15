@@ -26,7 +26,7 @@ public class Cart {
     @Column(name = "total_amount")
     private Double totalAmount = 0.0;
 
-    @OneToMany(mappedBy = "cart", cascade = {CascadeType.REMOVE})
+    @OneToMany(mappedBy = "cart", cascade = {CascadeType.ALL})
     List<CartItem> cartItems = new ArrayList<>();
 
     private Long userId;

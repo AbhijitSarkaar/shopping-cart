@@ -9,7 +9,6 @@ import java.util.List;
 public class CartDTO {
     private Long cartId;
     private Double totalAmount;
-    private Long userId;
     private List<CartItemDTO> cartItems;
 
     public static CartDTO builder(Cart cart) {
@@ -17,7 +16,6 @@ public class CartDTO {
         CartDTO cartDto = new CartDTO();
 
         cartDto.setCartId(cart.getCartId());
-        cartDto.setUserId(cart.getUserId());
         cartDto.setTotalAmount(cart.getTotalAmount());
         List<CartItemDTO> cartItems1 = cart.getCartItems()
                 .stream()
