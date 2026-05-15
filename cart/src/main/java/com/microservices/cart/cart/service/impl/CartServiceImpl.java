@@ -9,11 +9,13 @@ import com.microservices.cart.cart.model.CartItem;
 import com.microservices.cart.cart.repository.CartItemRepository;
 import com.microservices.cart.cart.repository.CartRepository;
 import com.microservices.cart.cart.service.CartService;
+import com.microservices.cart.cart.util.DTOBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,6 +30,9 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     CartItemRepository cartItemRepository;
+
+    @Autowired
+    DTOBuilder dtoBuilder;
 
     @Override
     public CartDTO addToCart(CartRequestDTO cartRequestDto, HttpServletRequest httpServletRequest) {
@@ -76,14 +81,31 @@ public class CartServiceImpl implements CartService {
         if(cartItems.isEmpty()) {
             cart.setCartItem(cartItem);
         } else {
-            for(CartItem item: cartItems) {
+            List<CartItem> cartItems1 = new ArrayList<>();
+            for(CartItem item: cart.getCartItems()) {
                 if(item.getProductId().equals(productId)) {
                     item.setQuantity(cartItem.getQuantity());
                 }
+                cartItems1.add(item);
             }
-            cart.setCartItems(cartItems);
+            cart.setCartItems(cartItems1);
         }
 
-        return CartDTO.builder(cart);
+        return dtoBuilder.CartDtoBuilder(cart);
     }
+
+    @Override
+    public CartDTO fetchCartDetails(HttpServletRequest httpServletRequest) {
+        Long userId = Long.valueOf(httpServletRequest.getHeader("X-USER-ID"));
+
+        // fetch cart details if a cart exists
+        Cart cart = cartRepository.findByUserId(userId);
+        if(cart == null) {
+            throw new RuntimeException("Cart not found");
+        }
+
+        return dtoBuilder.CartDtoBuilder(cart);
+
+    }
+
 }
