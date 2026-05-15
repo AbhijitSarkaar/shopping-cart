@@ -52,7 +52,7 @@ public class CartServiceImpl implements CartService {
         // set cart details
         cart.setUserId(userId);
         cart.setTotalAmount(
-                cart.getTotalAmount() + cartRequestDto.getQuantity() * product.getAmount()
+                cart.getTotalAmount() +  product.getAmount()
         );
         cartRepository.save(cart);
 
@@ -66,7 +66,7 @@ public class CartServiceImpl implements CartService {
         }
 
         cartItem.setQuantity(
-                (cartItem.getQuantity() == null ? 0 : cartItem.getQuantity()) + cartRequestDto.getQuantity()
+                cartItem.getQuantity() + 1
         );
         cartItem.setProductId(product.getProductId());
         cartItem.setCart(cart);
