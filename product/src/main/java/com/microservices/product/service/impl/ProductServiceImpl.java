@@ -10,6 +10,7 @@ import com.microservices.product.repository.ProductRepository;
 import com.microservices.product.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +21,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     CartClient cartClient;
+
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @Override
     public ProductDTO create(ProductRequestDTO productRequestDto) {
@@ -46,10 +50,6 @@ public class ProductServiceImpl implements ProductService {
         product.setAmount(productRequestDto.getAmount());
 
         product = productRepository.save(product);
-
-        System.out.println("productId: " + productId);
-        System.out.println("product.getProductId(): " + product.getProductId());
-
         cartClient.updateCart(
                 httpServletRequest.getHeader("X-USER-ID"),
                 productId.toString()
@@ -70,8 +70,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     Product getProductById(Long productId) {
-        return productRepository.findById(productId)
+
+        String redisKey = "product:#" + productId.toString();
+        Product cachedValue = (Product) redisTemplate.opsForValue().get(redisKey);
+        if(cachedValue != null) return cachedValue;
+
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product with product id " + productId + " not found"));
+
+        redisTemplate.opsForValue().set(redisKey, product);
+
+        return product;
     }
 
 }
