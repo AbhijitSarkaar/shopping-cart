@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(
-        name = "CART-SERVICE",
-        url = "${cart.service.url}"
+        name = "CART-SERVICE"
 )
 public interface CartClient {
     @PutMapping("/api/carts/products/{productId}")

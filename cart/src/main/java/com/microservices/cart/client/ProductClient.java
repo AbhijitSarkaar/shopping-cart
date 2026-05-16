@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(
-        name = "PRODUCT-SERVICE",
-        url = "${product.service.url}"
+        name = "PRODUCT-SERVICE"
 )
 public interface ProductClient {
     @GetMapping("/api/products/{productId}")
